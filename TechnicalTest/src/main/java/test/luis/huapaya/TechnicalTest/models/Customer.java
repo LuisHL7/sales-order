@@ -17,5 +17,5 @@ public class Customer {
     private String countryCode;
     private String phone;
     private String email;
-    private String contactPersons;
+    private ContactPerson[] contactPersons;
 }

@@ -9,6 +9,7 @@ import com.squareup.okhttp.Response;
 import com.squareup.okhttp.ResponseBody;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import test.luis.huapaya.TechnicalTest.models.Customer;
 import test.luis.huapaya.TechnicalTest.models.SalesOrder;
 
 import java.io.IOException;
@@ -20,16 +21,11 @@ public class TechnicalTestApplication {
 
 	public static void main(String[] args) throws IOException {
 		SpringApplication.run(TechnicalTestApplication.class, args);
+		salesOrderList();
+		customerList();
 
 
-		ResponseBody body = apiConsumer("https://api.holded.com/api/invoicing/v1/documents/salesorder").body();
-		String string = body.string();
-		System.out.println(string);
 
-		ObjectMapper objectMapper = new ObjectMapper();
-		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		List<SalesOrder> salesOrder = objectMapper.readValue(string, new TypeReference<>(){});
-		System.out.println(salesOrder);
 
 
 
@@ -37,7 +33,6 @@ public class TechnicalTestApplication {
 
 	private static Response apiConsumer(String url) throws IOException {
 		OkHttpClient client = new OkHttpClient();
-
 		Request request = new Request.Builder()
 				.url(url)
 				.get()
@@ -48,5 +43,19 @@ public class TechnicalTestApplication {
 		return client.newCall(request).execute();
 	}
 
+	private static void salesOrderList() throws IOException {
+		ResponseBody body = apiConsumer("https://api.holded.com/api/invoicing/v1/documents/salesorder").body();
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		List<SalesOrder> salesOrder = objectMapper.readValue(body.string(), new TypeReference<>(){});
+		System.out.println(salesOrder);
+	}
 
+	private static void customerList() throws IOException {
+		ResponseBody body = apiConsumer("https://api.holded.com/api/invoicing/v1/contacts").body();
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		List<Customer> customer = objectMapper.readValue(body.string(), new TypeReference<>(){});
+		System.out.println(customer);
+	}
 }
