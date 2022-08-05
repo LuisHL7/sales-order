@@ -77,8 +77,8 @@ public class ExcelGenerator {
             createCell(row, columnCount++, record.getCode(), style);
             createCell(row, columnCount++, record.getContactName(), style);
             createCell(row, columnCount++, record.getNumber(), style);
-            createCell(row, columnCount++, record.getSku(), style);
-            createCell(row, columnCount++, record.getUnits(), style);
+            createCell(row, columnCount++, record.getProducts()[0].getSku(), style);
+            createCell(row, columnCount++, record.getProducts()[0].getUnits(), style);
             createCell(row, columnCount++, record.getAddress().getAddress(), style);
             createCell(row, columnCount++, record.getAddress().getPostalCode(), style);
             createCell(row, columnCount++, record.getAddress().getCity(), style);

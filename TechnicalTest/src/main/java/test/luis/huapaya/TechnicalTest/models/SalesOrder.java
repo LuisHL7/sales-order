@@ -13,8 +13,7 @@ public class SalesOrder {
     private String code;
     private String contactName;
     private int number;
-    private int sku;
-    private int units;
+    private Product[] products;
     private Address address;
     private String phone;
     private String email;

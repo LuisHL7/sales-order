@@ -7,6 +7,7 @@ import com.squareup.okhttp.ResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import test.luis.huapaya.TechnicalTest.models.Customer;
+import test.luis.huapaya.TechnicalTest.models.Product;
 import test.luis.huapaya.TechnicalTest.models.SalesOrder;
 
 import java.io.IOException;
@@ -18,6 +19,7 @@ public class SalesOrderService implements ISalesOrderService {
     @Autowired
     private ICustomerService customerService;
 
+
     @Override
     public List<SalesOrder> salesOrderList() throws IOException {
         ResponseBody body = ConsumerApi.apiConsumer("https://api.holded.com/api/invoicing/v1/documents/salesorder").body();
@@ -25,11 +27,11 @@ public class SalesOrderService implements ISalesOrderService {
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         List<SalesOrder> salesOrderList = objectMapper.readValue(body.string(), new TypeReference<>() {
         });
-        addData(salesOrderList);
+        addDataCustomer(salesOrderList);
         return salesOrderList;
     }
 
-    private void addData(List<SalesOrder> salesOrderList ) throws IOException {
+    private void addDataCustomer(List<SalesOrder> salesOrderList) throws IOException {
         List<Customer> customerList = customerService.getCustomerList();
         for (SalesOrder salesOrder : salesOrderList) {
             boolean verify = false;
@@ -46,6 +48,8 @@ public class SalesOrderService implements ISalesOrderService {
                 }
             }
         }
+        System.out.println(salesOrderList);
     }
+
 
 }
