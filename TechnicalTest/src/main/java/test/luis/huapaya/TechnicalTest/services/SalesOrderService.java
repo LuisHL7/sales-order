@@ -25,31 +25,25 @@ public class SalesOrderService implements ISalesOrderService {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         List<SalesOrder> salesOrderList = objectMapper.readValue(body.string(), new TypeReference<>() {});
-        System.out.println(salesOrderList);
         addDataCustomer(salesOrderList);
         return salesOrderList;
     }
 
     private void addDataCustomer(List<SalesOrder> salesOrderList) throws IOException {
         List<Customer> customerList = customerService.getCustomerList();
-        System.out.println(customerList);
         for (SalesOrder salesOrder : salesOrderList) {
             boolean verify = false;
             for (int j = 0; j < customerList.size() && !verify; j++) {
                 if (salesOrder.getContactName().equalsIgnoreCase(customerList.get(j).getName())) {
                     if (customerList.get(j).getCustomFields().size() > 0) salesOrder.setCodeCustomer(customerList.get(j).getCustomFields());
-
                     salesOrder.setAddress(customerList.get(j).getBillAddress());
                     salesOrder.setPhone(customerList.get(j).getPhone());
                     salesOrder.setEmail(customerList.get(j).getEmail());
-                    System.out.println(customerList.get(j).getContactPersons());
                     if (customerList.get(j).getContactPersons().size() > 0) salesOrder.setContactPersons(customerList.get(j).getContactPersons());
                     verify = true;
                 }
             }
         }
-        System.out.println(salesOrderList);
     }
-
 
 }
