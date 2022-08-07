@@ -1,5 +1,6 @@
 package test.luis.huapaya.TechnicalTest.services;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -18,7 +19,8 @@ public class CustomerService implements ICustomerService {
         ResponseBody body = ConsumerApi.apiConsumer("https://api.holded.com/api/invoicing/v1/contacts").body();
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+
         return objectMapper.readValue(body.string(), new TypeReference<>() {});
+
     }
 }

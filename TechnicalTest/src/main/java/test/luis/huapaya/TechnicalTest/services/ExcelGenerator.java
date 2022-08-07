@@ -31,10 +31,10 @@ public class ExcelGenerator {
         XSSFFont font = workbook.createFont();
         font.setBold(true);
         font.setFontHeight(16);
-
         style.setFont(font);
+
         createCell(row, 0, "DeliveryId", style);
-        createCell(row, 1, "Code", style);
+        createCell(row, 1, "Code Customer", style);
         createCell(row, 2, "Name", style);
         createCell(row, 3, "LineNumber", style);
         createCell(row, 4, "Sku", style);
@@ -73,12 +73,12 @@ public class ExcelGenerator {
         for (SalesOrder record: salesOrderList) {
             Row row = sheet.createRow(rowCount++);
             int columnCount = 0;
-            createCell(row, columnCount++, record.getId(), style);
-            createCell(row, columnCount++, record.getCode(), style);
+            createCell(row, columnCount++, record.getDocNumber(), style);
+            if(record.getCodeCustomer().size() > 0) createCell(row, columnCount++, record.getCodeCustomer().get(0).getValue(), style);
             createCell(row, columnCount++, record.getContactName(), style);
             createCell(row, columnCount++, record.getNumber(), style);
-            createCell(row, columnCount++, record.getProducts()[0].getSku(), style);
-            createCell(row, columnCount++, record.getProducts()[0].getUnits(), style);
+            createCell(row, columnCount++, record.getProducts().get(0).getSku(), style);
+            createCell(row, columnCount++, record.getProducts().get(0).getUnits(), style);
             createCell(row, columnCount++, record.getAddress().getAddress(), style);
             createCell(row, columnCount++, record.getAddress().getPostalCode(), style);
             createCell(row, columnCount++, record.getAddress().getCity(), style);
@@ -86,7 +86,7 @@ public class ExcelGenerator {
             createCell(row, columnCount++, record.getAddress().getCountryCode(), style);
             createCell(row, columnCount++, record.getPhone(), style);
             createCell(row, columnCount++, record.getEmail(), style);
-            createCell(row, columnCount + 1, record.getContactPersons(), style);
+            if(record.getContactPersons().size() > 0) createCell(row, columnCount, record.getContactPersons().get(0).getName(), style);
         }
     }
 
