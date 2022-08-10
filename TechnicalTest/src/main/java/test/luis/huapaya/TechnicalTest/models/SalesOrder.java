@@ -11,6 +11,7 @@ import java.util.List;
 @ToString
 public class SalesOrder {
     private String docNumber;
+    private String date;
     private List<CustomField> codeCustomer = new ArrayList<>();;
     private String contactName;
     private int number;
@@ -19,4 +20,7 @@ public class SalesOrder {
     private String phone;
     private String email;
     private List<ContactPerson> contactPersons = new ArrayList<>();
+    private double subtotal;
+    private double total;
+    private int status;
 }
