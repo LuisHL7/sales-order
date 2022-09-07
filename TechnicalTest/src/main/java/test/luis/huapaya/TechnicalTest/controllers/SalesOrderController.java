@@ -28,7 +28,7 @@ public class SalesOrderController {
         String currentDateTime = dateFormatter.format(new Date());
 
         String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename=student" + currentDateTime + ".xlsx";
+        String headerValue = "attachment; filename=salesOrder" + currentDateTime + ".xlsx";
         response.setHeader(headerKey, headerValue);
 
         List <SalesOrder> listOfSalesOrder = salesOrderService.salesOrderList();
